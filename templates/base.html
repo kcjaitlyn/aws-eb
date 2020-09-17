@@ -12,6 +12,9 @@
     <header>
       <a href="{% url 'home' %}"><h1>HOME</h1></a>
       <a href="{% url 'create' %}"><h1>CREATE</h1></a>
+      <a href="{% url 'signup' %}"><h1>회원가입</h1></a>
+      <a href="{% url 'login' %}"><h1>로그인</h1></a>
+      <a href="{% url 'logout' %}"><h1>로그아웃</h1></a>
       <img class="dslion" src="{% static 'likelionds.png' %}" alt="" />
     </header>
     <section>{% block content %} {% endblock %}</section>
