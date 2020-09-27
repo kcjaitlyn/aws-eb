@@ -17,4 +17,53 @@
   <p>{{post.summary}}</p>
   <p class="date">{{post.date | date:"Y년 n월 j일 G시 i분" }}</p>
 </div>
-{% endfor %}{% endblock %}
+
+{% endfor %}
+
+<!-- 카카오 api 지도 코드 -->
+<body>
+<div id="map" style="width:1100px;height:400px;"></div>
+
+<script type="text/javascript" src=
+ "//dapi.kakao.com/v2/maps/sdk.js?appkey=e3131f69fc2179afde0fd0c4af6b24de&libraries=services"></script>
+<script>
+var mapContainer = document.getElementById('map'),
+    mapOpthion = {
+         center: new kakao.maps.LatLng(33.450701, 126.570667),
+         level: 3
+    };
+
+var map = new kakao.maps.Map(mapContainer,mapOpthion);
+/* 지도, 스카이뷰 */
+var mapTypeControl = new kakao.maps.MapTypeControl();
+map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+var zoomControl = new kakao.maps.ZoomControl();
+map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+/* 지도 시작위치 덕성여대로 설정하기 */
+var geocoder = new kakao.maps.services.Geocoder();
+
+geocoder.addressSearch('서울특별시 도봉구 삼양로 144길 33 덕성여자대학교', function(result, status
+) {
+    if (status === kakao.maps.services.Status.OK) {
+        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+        var marker = new kakao.maps.Marker({
+            map: map,
+            position: coords
+        });
+
+        var infowindow = new kakao.maps.InfoWindow({
+            content: '<div style="width:150px; text-align:center; padding:6px 0;">덕성여대</div>'
+        });
+        infowindow.open(map, marker);
+
+        map.setCenter(coords);
+    }
+});
+
+</script>
+
+</body>
+{% endblock %}
